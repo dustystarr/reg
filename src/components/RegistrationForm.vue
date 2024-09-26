@@ -4,19 +4,35 @@
     <form @submit.prevent="register">
       <div>
         <label for="firstName">Имя:</label>
-        <input type="text" v-model="firstName" required />
+        <input
+            type="text"
+            v-model="firstName"
+            :class="{ 'input-error': !firstName && submitted }"
+        />
       </div>
       <div>
         <label for="lastName">Фамилия:</label>
-        <input type="text" v-model="lastName" required />
+        <input
+            type="text"
+            v-model="lastName"
+            :class="{ 'input-error': !lastName && submitted }"
+        />
       </div>
       <div>
         <label for="email">Почта:</label>
-        <input type="email" v-model="email" required />
+        <input
+            type="email"
+            v-model="email"
+            :class="{ 'input-error': !email && submitted }"
+        />
       </div>
       <div>
         <label for="password">Пароль:</label>
-        <input type="password" v-model="password" required />
+        <input
+            type="password"
+            v-model="password"
+            :class="{ 'input-error': !password && submitted }"
+        />
       </div>
       <button type="submit">Зарегистрироваться</button>
     </form>
@@ -32,16 +48,20 @@ export default {
       lastName: '',
       email: '',
       password: '',
-      errorMessage: ''
+      errorMessage: '',
+      submitted: false
     };
   },
   methods: {
     register() {
+      this.submitted = true;
+
       if (!this.firstName || !this.lastName || !this.email || !this.password) {
         this.errorMessage = 'Пожалуйста, заполните все поля.';
       } else {
         this.errorMessage = '';
         alert('Регистрация успешна!');
+
       }
     }
   }
@@ -49,6 +69,10 @@ export default {
 </script>
 
 <style scoped>
+
+.input-error {
+  border: 2px solid red;
+}
 form {
   display: flex;
   flex-direction: column;
